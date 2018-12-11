@@ -5,14 +5,14 @@ var moment = require("moment");
 var axios = require("axios");
 var fs = require("fs");
 var Spotify = require('node-spotify-api');
-var spotify = new Spotify(keys.spotify);
+var Spotify = new Spotify(keys.spotify);
 var divider = "\n------------------------------------------------\n";
 
 var search = process.argv[2];
 var term = process.argv.slice(3).join(" ");
 
 function liriBot() {
-    switch (command) {
+    switch (search) {
       case "concert-this":
         console.log("Searching for Your Concert \n----------------------");
         concertThis();
@@ -44,13 +44,13 @@ function concertThis() {
     axios
         .get(queryURL)
         .then(function(response){
-            var concertData = response.data
+            var concertInfo = response.data
             for (var i = 0; i < response.data.length; i++) {
                 console.log("Venue name: " + concertInfo[i].venue.name)
                 console.log("City: " + concertInfo[i].venue.city)
                 console.log("Concert Date: " + moment(concertInfo[i].datetime).format("MM/DD/YYYY"))
         } })
-        fs.appendFile("log.txt", logCommand + concertData + divider, function(err) {
+        fs.appendFile("log.txt",+ this.concertInfo + divider , function(err) {
             if (err) throw err;
           });
 
@@ -60,19 +60,21 @@ function concertThis() {
 function spotifyThis() {
     var tracks = term;
 
-    spotify
+    if (tracks === "") { 
+        tracks = "uproar";}
+
+    Spotify
         .search({ type: 'track', query: tracks })
         .then(function(response) {
-        console.log(key("\nArtist: ") + response.tracks.items[0].artists[0].name);
-        console.log(key("Song: ") + response.tracks.items[0].name);
-        console.log(key("Preview: ") + response.tracks.items[0].preview_url);
-        console.log(key("Album Title: ") + response.tracks.items[0].album.name);
+        console.log(("Artist: ") + response.tracks.items[0].artists[0].name);
+        console.log(("Song: ") + response.tracks.items[0].name);
+        console.log(("Album Title: ") + response.tracks.items[0].album.name);
         })
         .catch(function(err) {
             console.log(err);
         });
 
-        fs.appendFile("log.txt", "\n" +  search + "\n" + song + divider, function(err) {
+        fs.appendFile("log.txt", "\n" +  search + "\n" + tracks + divider, function(err) {
             if (err) throw err;
          });
         };
@@ -102,5 +104,9 @@ function fileInfo(){
         return console.log(error);
       }; 
 
-}
+})};
+
+liriBot();
+
+
 
