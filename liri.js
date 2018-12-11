@@ -82,27 +82,27 @@ function spotifyThis() {
 // Do whatever
 
 function fileInfo(){
-    fs.readFile("random.txt", "utf8", function(error, data) {
-        if (error) {
-            return console.log(error);
-          }
-          var filedata = data.split(",")
-          var  dataArr = filedata[1].replace(/"/g,'');
+    // fs.readFile("random.txt", "utf8", function(error, data) {
+    //     if (error) {
+    //         return console.log(error);
+    //       }
+    //       var filedata = data.split(",")
+    //       var  dataArr = filedata[1].replace(/"/g,'');
   
 
-      if (filedata[0] === "spotify-this") {
-        spotifyThis(song = grabName);
+    //   if (filedata[0] === "spotify-this") {
+    //     spotifyThis(song = grabName);
 
-      } else if (filedata[0] === "movie-this") {
-        movieThis(movie = grabName);
+    //   } else if (filedata[0] === "movie-this") {
+    //     movieThis(movie = grabName);
 
-      } else if (filedata[0] === "concert-this") {
-        concertThis(artist = grabName);
-      }; 
+    //   } else if (filedata[0] === "concert-this") {
+    //     concertThis(artist = grabName);
+    //   }; 
 
-      if (error) {
-        return console.log(error);
-      }; 
+    //   if (error) {
+    //     return console.log(error);
+    //   }; 
 
 })};
 
