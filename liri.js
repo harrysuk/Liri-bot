@@ -79,30 +79,52 @@ function spotifyThis() {
          });
         };
 
+// Movie this
+function movieThis() {
+    var movie = term
+
+    // if no movie was entered, the default movie that will show up will be 
+    // "Mr. Nobody" 
+    if (movie === "") {
+        movie = "the matrix";
+    }
+
+    var queryUrl = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
+
+    axios
+        .get(queryUrl)
+        .then(function(response){
+            // console.log(response.data)
+
+            console.log("Title: " + response.data.Title)
+            console.log("Year: " + response.data.Year)
+            console.log("IMDB Rating: " + response.data.imdbRating)
+            console.log("Plot: " + response.data.Plot)
+            console.log(divider)
+        });
+
+         fs.appendFile("log.txt", "\n" + search + "\n" + movie, function(err) {
+            if (err) throw err;
+         });
+};
+
 // Do whatever
 
 function fileInfo(){
-    // fs.readFile("random.txt", "utf8", function(error, data) {
-    //     if (error) {
-    //         return console.log(error);
-    //       }
-    //       var filedata = data.split(",")
-    //       var  dataArr = filedata[1].replace(/"/g,'');
+    fs.readFile("random.txt", "utf8", function(error, data) {
+        if (error) {
+            return console.log(error);
+          }
+          var filedata = data.split(",")
+          var  dataArr = filedata[1].replace(/"/g,'');
   
 
-    //   if (filedata[0] === "spotify-this") {
-    //     spotifyThis(song = grabName);
 
-    //   } else if (filedata[0] === "movie-this") {
-    //     movieThis(movie = grabName);
+        spotifyThis(tracks = dataArr);
 
-    //   } else if (filedata[0] === "concert-this") {
-    //     concertThis(artist = grabName);
-    //   }; 
-
-    //   if (error) {
-    //     return console.log(error);
-    //   }; 
+      if (error) {
+        return console.log(error);
+      }; 
 
 })};
 
